@@ -19,7 +19,9 @@ def main():
     # Override sample with non-sample file-based env variables,
     # and override both with actual env variables
     config = {**dotenv_values("sample.env"), **dotenv_values(".env"), **os.environ}
+
     logger.info("Start discover weekly archiving")
+
     client = load_client(
         config["CLIENT_ID"],
         config["CLIENT_SECRET"],
@@ -31,8 +33,11 @@ def main():
     playlist_date, dw_uris = parse_this_week(
         client, config["DISCOVER_WEEKLY_PLAYLIST_ID"]
     )
+
     logger.info(f"Found this week's playlist for {playlist_date}")
+
     logger.info("Adding to all time playlist")
+
     add_to_all_time_playlist(client, dw_uris, config["ALL_DISCOVERED_PLAYLIST_ID"])
 
     #logger.info("Adding to the weekly archive")
